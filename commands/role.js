@@ -5,10 +5,14 @@ module.exports = {
 	description: 'Role using reactions',
 	execute(message, args) {
 
+		message.channel.send("React to gain role & associated channels.");
+
 		const embed = new Discord.MessageEmbed();
-		embed.setTitle('Server Roles');
+		embed.setTitle('Game Roles');
 		embed.setColor('BLUE')
-		embed.setDescription("\:zero: Test");
+		embed.setDescription("\:zero: CSGO \n" + 
+			":one: LOL"
+		);
 		message.channel.send(embed);
 
 	},

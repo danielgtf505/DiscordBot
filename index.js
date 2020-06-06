@@ -4,30 +4,33 @@ const client = new Discord.Client();
 const { prefix, token } = require('./config.json');
 
 client.login(token);
-
-client.once('ready', () => {
-	console.log('Ready!');
-});
-
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
+// Load commands from commands folder
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
 }
 
+// Dictionary of roles-emoji for ReactRole command
 const rolesDict = {
 	"csgo": "0️⃣",
 	"lol":"1️⃣"
 };
 
+// Ready
+client.once('ready', () => {
+	console.log('Ready!');
+});
+
+// message
 client.on('message', message => {
 	// For role reaction
 	if (message.author.bot){
 		if (message.embeds){
-			const embedMsg = message.embeds.find(msg => msg.title === 'Server Roles');
+			const embedMsg = message.embeds.find(msg => msg.title === 'Game Roles');
 			
 			if (embedMsg){
 				for (const [key, value] of Object.entries(rolesDict)){
@@ -56,6 +59,7 @@ client.on('message', message => {
 
 });
 
+// messageReactionAdd
 client.on('messageReactionAdd', async (reaction, user) =>{
 	if (user.bot)
 		return;
@@ -73,7 +77,7 @@ client.on('messageReactionAdd', async (reaction, user) =>{
 
 	if (reaction.message.author.bot){
 		if (reaction.message.embeds){
-			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Server Roles');
+			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Game Roles');
 			
 			if (embedMsg){
 				var emoji = reaction.emoji.name;
@@ -96,6 +100,7 @@ client.on('messageReactionAdd', async (reaction, user) =>{
 
 });
 
+// messageReactionRemove
 client.on('messageReactionRemove', async (reaction, user) =>{
 	if (user.bot)
 		return;
