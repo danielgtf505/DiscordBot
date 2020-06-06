@@ -18,6 +18,11 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
+const rolesDict = {
+	"csgo": "0️⃣",
+	"lol":"1️⃣"
+};
+
 client.on('message', message => {
 	// For role reaction
 	if (message.author.bot){
@@ -25,10 +30,9 @@ client.on('message', message => {
 			const embedMsg = message.embeds.find(msg => msg.title === 'Server Roles');
 			
 			if (embedMsg){
-				message.react('717040341118615695')
-				.then(reaction => reaction.message.delete(2000))
-				.then(msg => console.log("Deleted message"))
-				.catch(err => console.error);
+				for (const [key, value] of Object.entries(rolesDict)){
+					message.react(value)
+				}
 			}
 		}
 		return;
@@ -72,13 +76,19 @@ client.on('messageReactionAdd', async (reaction, user) =>{
 			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Server Roles');
 			
 			if (embedMsg){
-				var roleName = reaction.emoji.name;
-				var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLocaleLowerCase());
-				var member = reaction.message.guild.members.cache.find(member => member.id === user.id);
-			
-				member.roles.add(role).then(member => {
-					console.log("Added " + member.user.username + " from the " + role.name + " role.");
-				}).catch(err => console.error);
+				var emoji = reaction.emoji.name;
+				console.log("Emoji clicked : " + emoji);
+				var roleName = getKeyByValue(rolesDict, emoji); 
+				
+				if (roleName){
+					console.log("Role found : " + roleName);
+					var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLocaleLowerCase());
+					var member = reaction.message.guild.members.cache.find(member => member.id === user.id);
+
+					member.roles.add(role).then(member => {
+						console.log("Added " + member.user.username + " from the " + role.name + " role.");
+					}).catch(err => console.error);
+				}
 			}
 		}
 		return;
@@ -106,15 +116,27 @@ client.on('messageReactionRemove', async (reaction, user) =>{
 			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Server Roles');
 			
 			if (embedMsg){
-				var roleName = reaction.emoji.name;
-				var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLocaleLowerCase());
-				var member = reaction.message.guild.members.cache.find(member => member.id === user.id);
-			
-				member.roles.remove(role).then(member => {
-					console.log("Removed " + member.user.username + " from the " + role.name + " role.");
-				}).catch(err => console.error);
+				var emoji = reaction.emoji.name;
+				console.log("Emoji clicked : " + emoji);
+				var roleName = getKeyByValue(rolesDict, emoji); 
+				
+				if (roleName){
+					console.log("Role found : " + roleName);
+					var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLocaleLowerCase());
+					var member = reaction.message.guild.members.cache.find(member => member.id === user.id);
+
+					member.roles.remove(role).then(member => {
+						console.log("Removed " + member.user.username + " from the " + role.name + " role.");
+					}).catch(err => console.error);
+				}
 			}
 		}
 		return;
 	}
 });
+
+// Utils
+
+function getKeyByValue(object, value) {
+	return Object.keys(object).find(key => object[key] === value);
+}
