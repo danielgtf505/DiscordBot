@@ -2,10 +2,30 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const { prefix, token } = require('./config.json');
+const Sequelize = require('sequelize');
+const test = require('./util/reactroles')
 
 client.login(token);
 client.commands = new Discord.Collection();
 
+// Load database
+const sequelize = new Sequelize('database', 'user', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false,
+	// SQLite only
+	storage: 'database.sqlite',
+});
+
+// Role data model
+const GameRoles = sequelize.define('GameRoles', {
+	name: {
+		type: Sequelize.STRING,
+		unique: true,
+	},
+	emoji: Sequelize.STRING,
+});
+module.exports = { GameRoles }
 
 // Load commands from commands folder
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -14,33 +34,14 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-// Dictionary of roles-emoji for ReactRole command
-const rolesDict = {
-	"csgo": "0️⃣",
-	"lol":"1️⃣"
-};
-
 // Ready
 client.once('ready', () => {
+	GameRoles.sync();
 	console.log('Ready!');
 });
 
 // message
 client.on('message', message => {
-	// For role reaction
-	if (message.author.bot){
-		if (message.embeds){
-			const embedMsg = message.embeds.find(msg => msg.title === 'Game Roles');
-			
-			if (embedMsg){
-				for (const [key, value] of Object.entries(rolesDict)){
-					message.react(value)
-				}
-			}
-		}
-		return;
-	}
-
 	if (!message.content.startsWith(prefix)) return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
@@ -82,11 +83,11 @@ client.on('messageReactionAdd', async (reaction, user) =>{
 			if (embedMsg){
 				var emoji = reaction.emoji.name;
 				console.log("Emoji clicked : " + emoji);
-				var roleName = getKeyByValue(rolesDict, emoji); 
+				var aRole = await GameRoles.findOne({ where: { emoji: emoji } });
 				
-				if (roleName){
-					console.log("Role found : " + roleName);
-					var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLocaleLowerCase());
+				if (aRole){
+					console.log("Role found : " + aRole.name);
+					var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === aRole.name.toLocaleLowerCase());
 					var member = reaction.message.guild.members.cache.find(member => member.id === user.id);
 
 					member.roles.add(role).then(member => {
@@ -118,16 +119,16 @@ client.on('messageReactionRemove', async (reaction, user) =>{
 
 	if (reaction.message.author.bot){
 		if (reaction.message.embeds){
-			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Server Roles');
+			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Game Roles');
 			
 			if (embedMsg){
 				var emoji = reaction.emoji.name;
 				console.log("Emoji clicked : " + emoji);
-				var roleName = getKeyByValue(rolesDict, emoji); 
+				var aRole = await GameRoles.findOne({ where: { emoji: emoji } });
 				
-				if (roleName){
-					console.log("Role found : " + roleName);
-					var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLocaleLowerCase());
+				if (aRole){
+					console.log("Role found : " + aRole.name);
+					var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === aRole.name.toLocaleLowerCase());
 					var member = reaction.message.guild.members.cache.find(member => member.id === user.id);
 
 					member.roles.remove(role).then(member => {
