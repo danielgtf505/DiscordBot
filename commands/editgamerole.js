@@ -4,7 +4,7 @@ const {GameRoles} = require('../index.js')
 const regexEmoji = /<:([a-zA-Z0-9]+):(\d+)>/
 
 module.exports = {
-	name: 'addgamerole',
+	name: 'editgamerole',
 	description: 'Add a Game Role for roleReaction',
 	async execute(message, args) {
         
@@ -24,27 +24,11 @@ module.exports = {
             }
         }
 
-		try {
-
-            var roleExists = message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLocaleLowerCase());
-            if (roleExists){
-                const role = await GameRoles.create({
-                    name: roleName,
-                    emoji: roleEmoji,
-                });
-                return message.reply(`Game role ${role.name} added.`);
-            } else {
-                return message.reply(`Game role ${roleName} doesn't exists.`);
-            }
-
+        const affectedRows = await GameRoles.update({ emoji: roleEmoji }, { where: { name: roleName } });
+        if (!affectedRows){
+            return message.reply(`Game role ${roleName} doesn't exists.`);
+        } else {
+            return message.reply(`Game role ${roleName} edited with emoji ${roleEmoji}.`);
         }
-        catch (e) {
-            console.log(e);
-            if (e.name === 'SequelizeUniqueConstraintError') {
-                return message.reply('That game role already exists.');
-            }
-            return message.reply('Something went wrong with adding a game role.');
-        }
-
 	},
 };

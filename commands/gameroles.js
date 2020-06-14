@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const {GameRoles} = require('../index.js')
 
+const regexEmoji = /<:([a-zA-Z0-9]+):(\d+)>/
+
 module.exports = {
 	name: 'gameroles',
 	description: 'Game Role using reactions',
@@ -23,7 +25,14 @@ module.exports = {
 		embed.setDescription(desc);
 		message.channel.send(embed).then(sentMessage =>{
 			for (role of rolesList){
-				sentMessage.react(role.emoji)
+
+				var regex = role.emoji.match(regexEmoji);
+				if (regex){
+					console.log(regex[2]);
+					sentMessage.react(regex[2]);
+				} else {
+					sentMessage.react(role.emoji);
+				}
 			}
 		})
 
