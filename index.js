@@ -81,7 +81,14 @@ client.on('messageReactionAdd', async (reaction, user) =>{
 			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Game Roles');
 			
 			if (embedMsg){
-				var emoji = reaction.emoji.name;
+				var emoji;
+				
+				if (reaction.emoji.id != null){
+					emoji = "<:"+reaction.emoji.name+":"+reaction.emoji.id+">";
+				} else {
+					emoji = reaction.emoji.name;
+				}
+
 				console.log("Emoji clicked : " + emoji);
 				var aRole = await GameRoles.findOne({ where: { emoji: emoji } });
 				
@@ -118,11 +125,19 @@ client.on('messageReactionRemove', async (reaction, user) =>{
 	}
 
 	if (reaction.message.author.bot){
+
 		if (reaction.message.embeds){
 			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Game Roles');
 			
 			if (embedMsg){
-				var emoji = reaction.emoji.name;
+				var emoji;
+
+				if (reaction.emoji.id != null){
+					emoji = "<:"+reaction.emoji.name+":"+reaction.emoji.id+">";
+				} else {
+					emoji = reaction.emoji.name;
+				}
+
 				console.log("Emoji clicked : " + emoji);
 				var aRole = await GameRoles.findOne({ where: { emoji: emoji } });
 				
