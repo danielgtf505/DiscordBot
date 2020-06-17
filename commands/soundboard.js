@@ -6,6 +6,7 @@ const { OpusEncoder } = require('@discordjs/opus');
 
 module.exports = {
 	name: 'soundboard',
+	aliases: ['sb'],
 	description: 'Play a sound',
 	async execute(message, args) {
 
