@@ -16,7 +16,7 @@ module.exports = {
 			message.member.voice.channel.join().then(connection =>{
 
 				let file = path.join.apply(null, sound);
-				const dispatcher = connection.play(file);
+				const dispatcher = connection.play(file, {volume : 0.5});
 				dispatcher.on('start', () => {
 					console.log(`Playing ${file}.`);
 				});
