@@ -3,11 +3,12 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const { prefix, token } = require('./config.json');
 const Sequelize = require('sequelize');
-const test = require('./util/reactroles')
+
 const cooldowns = new Discord.Collection();
 
 client.login(token);
 client.commands = new Discord.Collection();
+client.queue = new Map();
 
 // Load database
 const sequelize = new Sequelize('database', 'user', 'password', {
@@ -73,7 +74,7 @@ client.on('message', message => {
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	const cooldownAmount = (command.cooldown || 3) * 1000;
+	const cooldownAmount = (command.cooldown || 1) * 1000;
 
 	if (timestamps.has(message.author.id)) {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
@@ -117,7 +118,7 @@ client.on('messageReactionAdd', async (reaction, user) =>{
 			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Game Roles');
 			
 			if (embedMsg){
-				var emoji;
+				let emoji;
 				
 				if (reaction.emoji.id != null){
 					emoji = "<:"+reaction.emoji.name+":"+reaction.emoji.id+">";
@@ -126,12 +127,12 @@ client.on('messageReactionAdd', async (reaction, user) =>{
 				}
 
 				console.log("Emoji clicked : " + emoji);
-				var aRole = await GameRoles.findOne({ where: { emoji: emoji } });
+				let aRole = await GameRoles.findOne({ where: { emoji: emoji } });
 				
 				if (aRole){
 					console.log("Role found : " + aRole.name);
-					var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === aRole.name.toLocaleLowerCase());
-					var member = reaction.message.guild.members.cache.find(member => member.id === user.id);
+					let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === aRole.name.toLocaleLowerCase());
+					let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
 
 					member.roles.add(role).then(member => {
 						console.log("Added " + member.user.username + " from the " + role.name + " role.");
@@ -166,7 +167,7 @@ client.on('messageReactionRemove', async (reaction, user) =>{
 			const embedMsg = reaction.message.embeds.find(msg => msg.title === 'Game Roles');
 			
 			if (embedMsg){
-				var emoji;
+				let emoji;
 
 				if (reaction.emoji.id != null){
 					emoji = "<:"+reaction.emoji.name+":"+reaction.emoji.id+">";
@@ -175,12 +176,12 @@ client.on('messageReactionRemove', async (reaction, user) =>{
 				}
 
 				console.log("Emoji clicked : " + emoji);
-				var aRole = await GameRoles.findOne({ where: { emoji: emoji } });
+				let aRole = await GameRoles.findOne({ where: { emoji: emoji } });
 				
 				if (aRole){
 					console.log("Role found : " + aRole.name);
-					var role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === aRole.name.toLocaleLowerCase());
-					var member = reaction.message.guild.members.cache.find(member => member.id === user.id);
+					let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === aRole.name.toLocaleLowerCase());
+					let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
 
 					member.roles.remove(role).then(member => {
 						console.log("Removed " + member.user.username + " from the " + role.name + " role.");
