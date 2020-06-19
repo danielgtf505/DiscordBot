@@ -10,12 +10,12 @@ module.exports = {
 	description: 'Play a sound',
 	async execute(message, args) {
 
-		var sound = genPath(args);
+		let sound = genPath(args);
 		if (message.member.voice.channel) {
 			
 			message.member.voice.channel.join().then(connection =>{
 
-				var file = path.join.apply(null, sound);
+				let file = path.join.apply(null, sound);
 				const dispatcher = connection.play(file);
 				dispatcher.on('start', () => {
 					console.log(`Playing ${file}.`);
@@ -35,7 +35,7 @@ module.exports = {
 };
 
 function genPath(args){
-	var pathAudio = [ __dirname, '..', 'resources', 'audio'];
+	let pathAudio = [ __dirname, '..', 'resources', 'audio'];
 
 	if (args[0] != null){
 		pathAudio.push(args[0]);
@@ -44,7 +44,7 @@ function genPath(args){
 		if (fs.existsSync(path.join.apply(null, pathAudio))){
 			
 			fs.readdir(path.join.apply(null, pathAudio), (err, files) => {
-				var i = 0;
+				let i = 0;
 				if (isNaN(args[1])){ // random
 					i = Math.floor(Math.random() * files.length);
 					console.log("Random file : "+ path.join.apply(null, pathAudio))

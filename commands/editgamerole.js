@@ -16,7 +16,7 @@ module.exports = {
             return message.reply('Error params missing');
         }
         
-        var regex = roleEmoji.match(regexEmoji);
+        let regex = roleEmoji.match(regexEmoji);
         if (regex){ // if emoji matchs customEmoji syntax, check if it's from the server
             console.log(regex[2]);
             if (!message.guild.emojis.cache.find(emoji => emoji.id === regex[2])){

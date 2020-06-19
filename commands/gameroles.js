@@ -16,7 +16,7 @@ module.exports = {
 
 		const rolesList = await GameRoles.findAll();
 
-		var desc = "";
+		let desc = "";
 		for (role of rolesList){
 			desc += role.emoji + " : " + role.name + "\n";
 		}
@@ -26,7 +26,7 @@ module.exports = {
 		message.channel.send(embed).then(sentMessage =>{
 			for (role of rolesList){
 
-				var regex = role.emoji.match(regexEmoji);
+				let regex = role.emoji.match(regexEmoji);
 				if (regex){
 					console.log(regex[2]);
 					sentMessage.react(regex[2]);
