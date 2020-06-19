@@ -13,7 +13,9 @@
     "discord.js": "^12.2.0",
     "ffmpeg-static": "^4.2.4",
     "sequelize": "^5.21.13",
+    "simple-youtube-api": "^5.2.1",
     "sqlite3": "^4.2.0",
-    "ytdl-core": "^2.1.7"
+    "ytdl-core": "^2.1.7",
+    "ytdl-core-discord": "^1.2.0"
   }
 }
