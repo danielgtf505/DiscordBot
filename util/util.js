@@ -15,13 +15,5 @@ module.exports = {
         }
 
         return true;
-    },
-
-    log(message, logMessage) {
-        if (!isNaN(LOG_CHANNEL_ID)){            
-            const channel = message.client.channels.cache.get(LOG_CHANNEL_ID);
-            channel.send(`${logMessage}`);
-        }
-        console.log(logMessage);
     }
 };
