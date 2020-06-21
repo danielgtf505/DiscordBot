@@ -3,9 +3,9 @@ var { translate } = require("google-translate-api-browser");
 
 // TODO : check args
 module.exports = {
-	name: 'translate',
-	description: 'Translate text',
-	async execute(message, args) {
+    name: 'translate',
+    description: 'Translate text',
+    async execute(message, args) {
 
         let from = args[0];
         let to = args[1];
@@ -13,9 +13,9 @@ module.exports = {
 
         let text = args.join(' ');
 
-        translate(text, {from: from, to:to})
-        .then(res =>{
-            message.reply(text + " > " + res.text)
-        })
-	},
+        translate(text, { from: from, to: to })
+            .then(res => {
+                message.reply(text + " > " + res.text)
+            })
+    },
 };
