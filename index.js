@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 
 const cooldowns = new Discord.Collection();
 
+client.options.presence.activity = {type : "WATCHING", name : "Rushia Boing Boing"};
 client.login(token);
 client.commands = new Discord.Collection();
 client.queue = new Map();
