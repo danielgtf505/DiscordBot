@@ -5,10 +5,11 @@ module.exports = {
 	description: 'Restart bot',
 	async execute(message) {
 		if (message.author.id === OWNER_ID){
-            message.reply(`Restarting ...`)
+            message.reply(`Restarting ...`);
+            await sleep(1000);
             process.exit();
         } else {
-            message.reply(`You are not owner of the bot.`)
+            message.reply(`You are not owner of the bot.`);
         }
 	},
 };
