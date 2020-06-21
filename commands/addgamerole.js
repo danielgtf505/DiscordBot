@@ -4,8 +4,13 @@ const {GameRoles} = require('../index.js')
 const regexEmoji = /<:([a-zA-Z0-9]+):(\d+)>/
 
 module.exports = {
-	name: 'addgamerole',
-	description: 'Add a Game Role for roleReaction',
+    name: 'addgamerole',
+    aliases: ['agr'],
+    description: 'Add a Game Role for roleReaction',
+    args: true,
+    usage:'<role> <emoji>',
+    guildOnly: true,
+    adminOnly: true,
 	async execute(message, args) {
         
         const roleName = args[0];

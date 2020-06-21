@@ -8,7 +8,10 @@ module.exports = {
 	name: "play",
 	cooldown: 3,
 	aliases: ["p"],
+	args: true,
+    usage:'<youtube url/title>',
 	description: "Plays audio from YouTube",
+	guildOnly: true,
 	async execute(message, args) {
 		const { channel } = message.member.voice;
 

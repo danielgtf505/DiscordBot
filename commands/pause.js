@@ -3,6 +3,7 @@ const { canModifyQueue } = require("../util/util");
 module.exports = {
     name: "pause",
     description: "Pause the currently playing music",
+    guildOnly: true,
     execute(message) {
         const queue = message.client.queue.get(message.guild.id);
         if (!queue) return message.reply("There is nothing playing.").catch(console.error);

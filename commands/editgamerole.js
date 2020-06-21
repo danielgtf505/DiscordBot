@@ -5,7 +5,12 @@ const regexEmoji = /<:([a-zA-Z0-9]+):(\d+)>/
 
 module.exports = {
 	name: 'editgamerole',
-	description: 'Add a Game Role for roleReaction',
+    aliases: ['egr'],
+    description: 'Edit the emoji of a Game Role for roleReaction',
+    args: true,
+    usage:'<role> <emoji>',
+    guildOnly: true,
+    adminOnly: true,
 	async execute(message, args) {
         
         const roleName = args[0];

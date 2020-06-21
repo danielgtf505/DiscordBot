@@ -7,6 +7,8 @@ function sleep(ms) {
 module.exports = {
     name: 'restart',
     description: 'Restart bot',
+    guildOnly: true,
+    adminOnly: true,
     async execute(message) {
         if (message.author.id === OWNER_ID) {
             message.reply(`Restarting ...`);

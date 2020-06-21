@@ -2,8 +2,13 @@ const Discord = require('discord.js');
 const {GameRoles} = require('../index.js')
 
 module.exports = {
-	name: 'removegamerole',
-	description: 'Remove a Game Role for roleReaction',
+    name: 'removegamerole',
+    aliases: ['rgr'],
+    description: 'Remove a Game Role for roleReaction',
+    args: true,
+    usage:'<role> <emoji>',
+    guildOnly: true,
+    adminOnly: true,
 	async execute(message, args) {
         
         const roleName = args[0];

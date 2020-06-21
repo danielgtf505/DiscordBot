@@ -6,6 +6,8 @@ const regexEmoji = /<:([a-zA-Z0-9]+):(\d+)>/
 module.exports = {
 	name: 'gameroles',
 	description: 'Game Role using reactions',
+	guildOnly: true,
+    adminOnly: true,
 	async execute(message, args) {
 		
 		message.channel.send("React to gain role & associated channels.");

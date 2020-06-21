@@ -59,6 +59,13 @@ client.on('message', message => {
 		return message.reply('I can\'t execute that command inside DMs!');
 	}
 
+	if (command.adminOnly){
+		const member = message.mentions.members.first();
+		if (member.roles.cache.some(role => role.name !== 'Bot Commander')){
+			return message.reply('You are not a bot commander while executing an admin-only command.');
+		}
+	}
+
 	if (command.args && !args.length) {
 		let reply = `You didn't provide any arguments, ${message.author}!`;
 

@@ -8,6 +8,7 @@ module.exports = {
 	name: 'soundboard',
 	aliases: ['sb'],
 	description: 'Play a sound',
+	guildOnly: true,
 	async execute(message, args) {
 
 		let sound = genPath(args);

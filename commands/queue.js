@@ -4,6 +4,7 @@ module.exports = {
     name: "queue",
     aliases: ["q"],
     description: "Show the music queue and now playing.",
+    guildOnly: true,
     execute(message) {
         const queue = message.client.queue.get(message.guild.id);
         if (!queue) return message.reply("There is nothing playing.").catch(console.error);

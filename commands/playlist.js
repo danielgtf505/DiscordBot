@@ -11,6 +11,9 @@ module.exports = {
     cooldown: 3,
     aliases: ["pl"],
     description: "Play a playlist from youtube",
+    args: true,
+    usage:'<playlist>',
+    guildOnly: true,
     async execute(message, args) {
         const { channel } = message.member.voice;
 
