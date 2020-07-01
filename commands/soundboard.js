@@ -30,6 +30,8 @@ module.exports = {
 	
 				dispatcher.on('error', console.error);
 			})
+		} else {
+			return message.reply(`Please connect to a voice channel`).catch(console.error);
 		}
 
 	},
