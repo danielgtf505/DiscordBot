@@ -39,7 +39,7 @@ function genPath(args){
 	let pathAudio = [ __dirname, '..', 'resources', 'audio'];
 
 	if (args[0] != null){
-		pathAudio.push(args[0]);
+		pathAudio.push(args[0].toLowerCase());
 		console.log("1 :  "+ path.join.apply(null, pathAudio))
 
 		if (fs.existsSync(path.join.apply(null, pathAudio))){
