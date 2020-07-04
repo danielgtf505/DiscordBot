@@ -1,26 +1,36 @@
-const Discord = require('discord.js');
-const {GameRoles} = require('../index.js')
+const { Command } = require('discord.js-commando');
+const { GameRoles } = require('../../structures/db')
 
 const regexEmoji = /<:([a-zA-Z0-9]+):(\d+)>/
 
-module.exports = {
-    name: 'addgamerole',
-    aliases: ['agr'],
-    description: 'Add a Game Role for roleReaction',
-    args: true,
-    usage:'<role> <emoji>',
-    guildOnly: true,
-    adminOnly: true,
-	async execute(message, args) {
-        
-        const roleName = args[0];
-        const roleEmoji = args[1];
+module.exports = class AddGameRoleCommand extends Command {
+	constructor(client) {
+		super(client, {
+			name: 'addgamerole',
+			aliases: ['agr'],
+			group: 'admin',
+			memberName: 'addgamerole',
+			description: 'Add a Game Role for roleReaction',
+            clientPermissions: ['ADMINISTRATOR'],
+			userPermissions: ['MANAGE_MESSAGES'],
+			guildOnly: true,
+			args: [
+				{
+					key: 'roleName',
+					prompt: 'What is the role to add ?',
+					type: 'string',
+                },
+                {
+					key: 'roleEmoji',
+					prompt: 'What is the emoji for the role to add ?',
+					type: 'string',
+				},
+			],
+		});
+    }
+    
+    async run(message, {roleName, roleEmoji}) {
 
-        if (roleName == null || roleEmoji == null) {
-            console.log('Error params missing');
-            return message.reply('Error params missing');
-        }
-        
         let regex = roleEmoji.match(regexEmoji);
         if (regex){ // if emoji matchs customEmoji syntax, check if it's from the server
             console.log(regex[2]);
@@ -51,5 +61,5 @@ module.exports = {
             return message.reply('Something went wrong with adding a game role.');
         }
 
-	},
+	}
 };

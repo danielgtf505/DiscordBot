@@ -91,3 +91,4 @@ typings/
 
 # config
 config.json
+*.sqlite

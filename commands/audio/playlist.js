@@ -1,42 +1,44 @@
+const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require("discord.js");
-const { play } = require("../include/play");
-const { YOUTUBE_API_KEY, MAX_PLAYLIST_SIZE } = require("../config.json");
+const { play } = require("../../include/play");
+const { YOUTUBE_API_KEY, MAX_PLAYLIST_SIZE } = require("../../config.json");
 const YouTubeAPI = require("simple-youtube-api");
 const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
 
-const { PRUNING } = require("../config.json");
+const { PRUNING } = require("../../config.json");
 
-module.exports = {
-    name: "playlist",
-    cooldown: 3,
-    aliases: ["pl"],
-    description: "Play a playlist from youtube",
-    args: true,
-    usage:'<playlist>',
-    guildOnly: true,
-    async execute(message, args) {
+module.exports = class PlaylistCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'playlist',
+            aliases: ['pl'],
+            group: 'audio',
+            memberName: 'playlist',
+            description: 'Playlist.',
+            guildOnly: true,
+            clientPermissions: ['CONNECT', 'SPEAK'],
+			args: [
+				{
+					key: 'link',
+					prompt: 'Youtube playlist link',
+					type: 'string',
+                },
+			],
+        });
+    }
+
+    async run(message, {link}) {
         const { channel } = message.member.voice;
 
         const serverQueue = message.client.queue.get(message.guild.id);
         if (serverQueue && channel !== message.guild.me.voice.channel)
             return message.reply(`You must be in the same channel as ${message.client.user}`).catch(console.error);
 
-        if (!args.length)
-            return message
-                .reply(`Usage: ${message.client.prefix}playlist <YouTube Playlist URL | Playlist Name>`)
-                .catch(console.error);
         if (!channel) return message.reply("You need to join a voice channel first!").catch(console.error);
-
-        const permissions = channel.permissionsFor(message.client.user);
-        if (!permissions.has("CONNECT"))
-            return message.reply("Cannot connect to voice channel, missing permissions");
-        if (!permissions.has("SPEAK"))
-            return message.reply("I cannot speak in this voice channel, make sure I have the proper permissions!");
 
         const search = args.join(" ");
         const pattern = /^.*(youtu.be\/|list=)([^#\&\?]*).*/gi;
-        const url = args[0];
-        const urlValid = pattern.test(args[0]);
+        const urlValid = pattern.test(link);
 
         const queueConstruct = {
             textChannel: message.channel,
@@ -54,7 +56,7 @@ module.exports = {
 
         if (urlValid) {
             try {
-                playlist = await youtube.getPlaylist(url, { part: "snippet" });
+                playlist = await youtube.getPlaylist(link, { part: "snippet" });
                 videos = await playlist.getVideos(MAX_PLAYLIST_SIZE || 10, { part: "snippet" });
             } catch (error) {
                 console.error(error);
@@ -119,4 +121,5 @@ module.exports = {
             }
         }
     }
+
 };
