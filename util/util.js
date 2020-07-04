@@ -1,6 +1,11 @@
 const { LOG_CHANNEL_ID } = require("../config.json");
 
 module.exports = {
+
+    delay(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	},
+
     /**
      * Check if member is in the same channel as the bot
      * @param {*} member 
