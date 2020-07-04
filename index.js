@@ -15,6 +15,7 @@ client.registry
 	.registerDefaultTypes()
 	.registerGroups([
 		['admin', 'Administration'],
+		['anime', 'Anime'],
 		['audio', 'Audio'],
 		['random', 'Random'],
 		['utility', 'Utility'],

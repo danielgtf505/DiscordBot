@@ -4,6 +4,49 @@ module.exports = {
 
     delay(ms) {
 		return new Promise(resolve => setTimeout(resolve, ms));
+    },
+
+    list(arr, conj = 'and') {
+		const len = arr.length;
+		if (len === 0) return '';
+		if (len === 1) return arr[0];
+		return `${arr.slice(0, -1).join(', ')}${len > 1 ? `${len > 2 ? ',' : ''} ${conj} ` : ''}${arr.slice(-1)}`;
+	},
+    
+    embedURL(title, url, display) {
+		return `[${title}](${url.replace(/\)/g, '%27')}${display ? ` "${display}"` : ''})`;
+    },
+
+    formatNumber(number, minimumFractionDigits = 0) {
+		return Number.parseFloat(number).toLocaleString(undefined, {
+			minimumFractionDigits,
+			maximumFractionDigits: 2
+		});
+	},
+
+	formatNumberK(number) {
+		return number > 999 ? `${(number / 1000).toLocaleString(undefined, { maximumFractionDigits: 1 })}K` : number;
+    },
+    
+    shorten(text, maxLen = 2000) {
+		return text.length > maxLen ? `${text.substr(0, maxLen - 3)}...` : text;
+	},
+    
+    cleanAnilistHTML(html, removeLineBreaks = true) {
+		let clean = html;
+		if (removeLineBreaks) clean = clean.replace(/\r|\n|\f/g, '');
+		clean = clean
+			.replace(/<br>/g, '\n')
+			.replace(/&#039;/g, '\'')
+			.replace(/&quot;/g, '"')
+			.replace(/<\/?i>/g, '*')
+			.replace(/<\/?b>/g, '**')
+			.replace(/~!|!~/g, '||')
+			.replace(/&mdash;/g, '—');
+		if (clean.length > 2000) clean = `${clean.substr(0, 1995)}...`;
+		const spoilers = (clean.match(/\|\|/g) || []).length;
+		if (spoilers !== 0 && (spoilers && (spoilers % 2))) clean += '||';
+		return clean;
 	},
 
     /**
