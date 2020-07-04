@@ -1,5 +1,5 @@
-const Command = require('../../structures/Command');
-const { delay } = require('../../util/Util');
+const { Command } = require('discord.js-commando');
+const { delay } = require("../../util/util");
 
 module.exports = class TimerCommand extends Command {
 	constructor(client) {
