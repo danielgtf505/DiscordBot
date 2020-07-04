@@ -1,10 +1,19 @@
-const { canModifyQueue } = require("../util/util");
+const { Command } = require('discord.js-commando');
+const { canModifyQueue } = require("../../util/util");
 
-module.exports = {
-    name: "pause",
-    description: "Pause the currently playing music",
-    guildOnly: true,
-    execute(message) {
+module.exports = class PauseCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'pause',
+            aliases: [],
+            group: 'audio',
+            memberName: 'pause',
+            description: 'Pause or unpause the youtube player.',
+            guildOnly: true,
+        });
+    }
+
+    run(message) {
         const queue = message.client.queue.get(message.guild.id);
         if (!queue) return message.reply("There is nothing playing.").catch(console.error);
         if (!canModifyQueue(message.member)) return;

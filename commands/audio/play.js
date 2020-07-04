@@ -1,46 +1,49 @@
-const { play } = require("../include/play");
-const { YOUTUBE_API_KEY } = require("../config.json");
+const { Command } = require('discord.js-commando');
+const { play } = require("../../include/play");
+const { YOUTUBE_API_KEY } = require("../../config.json");
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
 const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
 
-module.exports = {
-	name: "play",
-	cooldown: 3,
-	aliases: ["p"],
-	args: true,
-    usage:'<youtube url/title>',
-	description: "Plays audio from YouTube",
-	guildOnly: true,
-	async execute(message, args) {
+module.exports = class PlayCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'play',
+            aliases: ['p'],
+            group: 'audio',
+            memberName: 'play',
+            description: 'Play a music from youtube',
+			guildOnly: true,
+			clientPermissions: ['CONNECT', 'SPEAK'],
+			args: [
+				{
+					key: 'video',
+					prompt: 'Youtube link or title',
+					type: 'string',
+                },
+			],
+        });
+    }
+
+    async run(message, {video}) {
 		const { channel } = message.member.voice;
 
+		// Remove embed when linking a youtube video
 		message.suppressEmbeds(true);
 
 		const serverQueue = message.client.queue.get(message.guild.id);
 		if (serverQueue && channel !== message.guild.me.voice.channel)
 			return message.reply(`You must be in the same channel as ${message.client.user}`).catch(console.error);
-
-		if (!args.length)
-			return message
-				.reply(`Usage: ${message.client.prefix}play <YouTube URL | Video Name>`)
-				.catch(console.error);
+		
 		if (!channel) return message.reply("You need to join a voice channel first!").catch(console.error);
 
-		const permissions = channel.permissionsFor(message.client.user);
-		if (!permissions.has("CONNECT"))
-			return message.reply("Cannot connect to voice channel, missing permissions");
-		if (!permissions.has("SPEAK"))
-			return message.reply("I cannot speak in this voice channel, make sure I have the proper permissions!");
-
-		const search = args.join(" ");
 		const videoPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
 		const playlistPattern = /^.*(list=)([^#\&\?]*).*/gi;
-		const url = args[0];
-		const urlValid = videoPattern.test(args[0]);
+		const urlValid = videoPattern.test(video);
 
+		// TODO : does it work with commando ?
 		// Start the playlist if playlist url was provided
-		if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
+		if (!videoPattern.test(video) && playlistPattern.test(video)) {
 			return message.client.commands.get("playlist").execute(message, args);
 		}
 
@@ -77,7 +80,7 @@ module.exports = {
 			}
 		} else {
 			try {
-				const results = await youtube.searchVideos(search, 1);
+				const results = await youtube.searchVideos(video, 1);
 				songInfo = await ytdl.getInfo(results[0].url);
 				song = {
 					title: songInfo.title,
@@ -109,5 +112,7 @@ module.exports = {
 			await channel.leave();
 			return message.channel.send(`Could not join the channel: ${error}`).catch(console.error);
 		}
-	}
+
+    }
+
 };

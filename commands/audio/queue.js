@@ -1,11 +1,19 @@
 const { MessageEmbed, splitMessage, escapeMarkdown } = require("discord.js");
+const { Command } = require('discord.js-commando');
 
-module.exports = {
-    name: "queue",
-    aliases: ["q"],
-    description: "Show the music queue and now playing.",
-    guildOnly: true,
-    execute(message) {
+module.exports = class QueueCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'queue',
+            aliases: [],
+            group: 'audio',
+            memberName: 'queue',
+            description: 'Show the current youtube queue',
+            guildOnly: true,
+        });
+    }
+
+    run(message) {
         const queue = message.client.queue.get(message.guild.id);
         if (!queue) return message.reply("There is nothing playing.").catch(console.error);
 
@@ -28,4 +36,5 @@ module.exports = {
             message.channel.send(queueEmbed);
         });
     }
+
 };
