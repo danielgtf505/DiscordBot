@@ -1,30 +1,23 @@
 const SubredditCommand = require('../../structures/Subreddit');
 const { list } = require("../../util/util");
-const subreddits = require('../../resources/json/hentai');
+const subreddits = require('../../resources/json/asians');
 
-module.exports = class HentaiCommand extends SubredditCommand {
+module.exports = class AsiansCommand extends SubredditCommand {
 	constructor(client) {
 		super(client, {
-			name: 'hentai',
-			group: 'random',
-			memberName: 'hentai',
-			description: 'Responds with a random hentai image.',
+			name: 'asians',
+			group: 'reddit',
+			memberName: 'asians',
+			description: 'Responds with a picture from Narkrai\'s favorite subreddits.',
 			details: `**Subreddits:** ${subreddits.join(', ')}`,
 			clientPermissions: ['EMBED_LINKS'],
 			nsfw: true,
 			postType: 'image',
 			getIcon: true,
-			credit: [
-				{
-					name: 'Overtime2005',
-					url: 'https://github.com/Overtime2005',
-					reason: 'Original Subreddit List'
-				}
-			],
 			args: [
 				{
 					key: 'subreddit',
-					prompt: `What subreddit do you want to get hentai from? Either ${list(subreddits, 'or')}.`,
+					prompt: `What subreddit do you want to get pictures from? Either ${list(subreddits, 'or')}.`,
 					type: 'string',
 					oneOf: subreddits,
 					default: () => subreddits[Math.floor(Math.random() * subreddits.length)],

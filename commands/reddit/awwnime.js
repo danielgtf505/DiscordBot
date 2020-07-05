@@ -5,7 +5,7 @@ module.exports = class AwwnimeCommand extends SubredditCommand {
 		super(client, {
 			name: 'awwnime',
 			aliases: ['aww-anime', 'moe'],
-			group: 'random',
+			group: 'reddit',
 			memberName: 'awwnime',
 			description: 'Responds with cute random anime art.',
 			clientPermissions: ['EMBED_LINKS'],

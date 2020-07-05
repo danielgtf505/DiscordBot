@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { prefix, token, OWNER_ID } = require('./config.json');
+const { prefix, token, OWNER_ID, ACTIVITY_URL } = require('./config.json');
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
 const db = require('./structures/db');
@@ -18,6 +18,7 @@ client.registry
 		['anime', 'Anime'],
 		['audio', 'Audio'],
 		['random', 'Random'],
+		['reddit', 'Reddit'],
 		['utility', 'Utility'],
 	])
 	.registerDefaultGroups()
@@ -29,8 +30,8 @@ client.queue = new Map();
 // Ready
 client.once('ready', () => {
 	db.GameRoles.sync();
+	client.user.setActivity('DM help', {type : "STREAMING", url : ACTIVITY_URL});
 	console.log('Ready!');
-	client.user.setActivity('Rushia Boing Boing', {type : "WATCHING", name : "Rushia Boing Boing"});
 });
 
 client.on('message', message => {
