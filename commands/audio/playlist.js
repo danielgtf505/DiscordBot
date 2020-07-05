@@ -36,7 +36,6 @@ module.exports = class PlaylistCommand extends Command {
 
         if (!channel) return message.reply("You need to join a voice channel first!").catch(console.error);
 
-        const search = args.join(" ");
         const pattern = /^.*(youtu.be\/|list=)([^#\&\?]*).*/gi;
         const urlValid = pattern.test(link);
 
@@ -63,14 +62,9 @@ module.exports = class PlaylistCommand extends Command {
                 return message.reply("Playlist not found :(").catch(console.error);
             }
         } else {
-            try {
-                const results = await youtube.searchPlaylists(search, 1, { part: "snippet" });
-                playlist = results[0];
-                videos = await playlist.getVideos(MAX_PLAYLIST_SIZE || 10, { part: "snippet" });
-            } catch (error) {
-                console.error(error);
-                return message.reply("Playlist not found :(").catch(console.error);
-            }
+            
+            return message.reply("Playlist not found :(").catch(console.error);
+
         }
 
         videos.forEach((video) => {
