@@ -43,9 +43,9 @@ module.exports = class PlayCommand extends Command {
 
 		// TODO : does it work with commando ?
 		// Start the playlist if playlist url was provided
-		if (!videoPattern.test(video) && playlistPattern.test(video)) {
-			return message.client.commands.get("playlist").execute(message, args);
-		}
+		// if (!videoPattern.test(video) && playlistPattern.test(video)) {
+		// 	return message.client.commands.get("playlist").execute(message, args);
+		// }
 
 		const queueConstruct = {
 			textChannel: message.channel,
