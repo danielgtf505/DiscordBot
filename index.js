@@ -18,6 +18,7 @@ client.registry
 		['anime', 'Anime'],
 		['audio', 'Audio'],
 		['random', 'Random'],
+		['reddit', 'Reddit'],
 		['utility', 'Utility'],
 	])
 	.registerDefaultGroups()

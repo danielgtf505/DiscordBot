@@ -58,7 +58,7 @@ module.exports = class SubredditCommand extends Command {
 	async random(subreddit, nsfw) {
 		let icon = null;
 		const { body } = await request
-			.get(`https://www.reddit.com/r/${subreddit}/hot.json`)
+			.get(`https://www.reddit.com/r/${subreddit}/top.json?limit=100&t=month`	)
 			.query({ limit: 100 });
 		if (!body.data.children.length) return null;
 		const posts = body.data.children.filter(post => {
