@@ -11,7 +11,7 @@ module.exports = class TravelCommand extends SubredditCommand {
 			description: 'Responds with a travel picture from reddit.',
 			details: `**Subreddits:** ${subreddits.join(', ')}`,
 			clientPermissions: ['EMBED_LINKS'],
-			nsfw: true,
+			nsfw: false,
 			postType: 'image',
 			getIcon: true,
 			args: [

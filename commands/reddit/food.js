@@ -11,7 +11,7 @@ module.exports = class FoodCommand extends SubredditCommand {
 			description: 'Responds with a picture from a food subreddits.',
 			details: `**Subreddits:** ${subreddits.join(', ')}`,
 			clientPermissions: ['EMBED_LINKS'],
-			nsfw: true,
+			nsfw: false,
 			postType: 'image',
 			getIcon: true,
 			args: [
