@@ -22,7 +22,13 @@ client.registry
 		['utility', 'Utility'],
 	])
 	.registerDefaultGroups()
-	.registerDefaultCommands()
+	.registerDefaultCommands({
+		ping : false,
+		prefix: false,
+		commandState: false,
+		unknownCommand: false,
+		eval : false
+	})
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.queue = new Map();

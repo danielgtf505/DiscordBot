@@ -13,7 +13,7 @@ module.exports = class GamerolesCommand extends Command {
 			memberName: 'gameroles',
 			description: 'Display embeded message for game roles',
 			clientPermissions: ['ADMINISTRATOR'],
-			userPermissions: ['MANAGE_MESSAGES'],
+			userPermissions: ['ADMINISTRATOR'],
 			guildOnly: true,
 		});
     }
