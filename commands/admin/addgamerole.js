@@ -12,7 +12,7 @@ module.exports = class AddGameRoleCommand extends Command {
 			memberName: 'addgamerole',
 			description: 'Add a Game Role for roleReaction',
             clientPermissions: ['ADMINISTRATOR'],
-			userPermissions: ['MANAGE_MESSAGES'],
+			userPermissions: ['ADMINISTRATOR'],
 			guildOnly: true,
 			args: [
 				{

@@ -10,7 +10,7 @@ module.exports = class RemoveGameRoleCommand extends Command {
 			memberName: 'removegamerole',
 			description: 'Remove a Game Role from roleReaction',
             clientPermissions: ['ADMINISTRATOR'],
-			userPermissions: ['MANAGE_MESSAGES'],
+			userPermissions: ['ADMINISTRATOR'],
 			guildOnly: true,
 			args: [
 				{
