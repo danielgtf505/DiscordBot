@@ -11,19 +11,44 @@ module.exports = class LyricsCommand extends Command {
             memberName: 'lyrics',
             description: 'Find the lyrics of the current song.',
             guildOnly: true,
+            args: [
+				{
+					key: 'title',
+					prompt: 'What is the title of the song ?',
+                    type: 'string',
+                    default: ''
+                }, 
+                {
+					key: 'artist',
+					prompt: 'Who is the artist of the song ?',
+                    type: 'string',
+                    default: ''
+                }
+			],
         });
     }
 
-    async run(message) {
-        const queue = message.client.queue.get(message.guild.id);
-        if (!queue) return message.channel.send("There is nothing playing.").catch(console.error);
+    async run(message, {title, artist}) {
 
-        let lyrics = null;
+        let usingQueue = false;
 
-        try {
-            lyrics = await lyricsFinder(queue.songs[0].title, "");
-        } catch (error) {
-            lyrics = `No lyrics found for ${queue.songs[0].title}.`;
+        if (title === ''){
+            const queue = message.client.queue.get(message.guild.id);
+            if (!queue) return message.channel.send("There is nothing playing.").catch(console.error);
+
+            title = queue.songs[0].title;
+            artist = '';
+            usingQueue = true;
+        }
+
+        let lyrics = await lyricsFinder(title, artist);
+
+        if (lyrics === ''){
+            if (usingQueue){
+                lyrics = `No lyrics found for ${title} in queue. Try manual search : \`lyrics <title> <artist>\` `;
+            } else {
+                lyrics = `No lyrics found for ${title}.`;
+            }
         }
 
         let lyricsEmbed = new MessageEmbed()
