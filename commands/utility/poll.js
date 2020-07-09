@@ -4,6 +4,7 @@ const { MessageEmbed } = require("discord.js");
 const { intToEmoji, mapToResult } = require("../../util/util")
 
 const forceEndEmoji = "❌";
+const infoPollEmoji = "❓";
 
 module.exports = class PollCommand extends Command {
 	constructor(client) {
@@ -52,6 +53,7 @@ module.exports = class PollCommand extends Command {
         // Array containing used emojis
         let usedEmojis = Object.keys(results);
         usedEmojis.push(forceEndEmoji);
+        usedEmojis.push(infoPollEmoji);
 
         let embededMessage = new MessageEmbed()
         .setTitle("Poll")
@@ -65,6 +67,7 @@ module.exports = class PollCommand extends Command {
 
         // Add reactions
         poll.react(forceEndEmoji);
+        poll.react(infoPollEmoji);
         for (let j = 1; j<= array.length; j++){
             poll.react(intToEmoji(j));
         }
@@ -79,6 +82,21 @@ module.exports = class PollCommand extends Command {
         collector.on("collect", (reaction, user) => {
             if (usedEmojis.includes(reaction.emoji.name)){
                 if (reaction.emoji.name === forceEndEmoji && message.author.id === user.id) return collector.stop();
+
+                if (reaction.emoji.name === infoPollEmoji){
+                    console.log("Here " + infoPollEmoji);
+                    let infoMessage = new MessageEmbed()
+                    .setTitle("Poll")
+                    .setAuthor(message.author.username)
+                    .setDescription(question)
+                    .addField("Results", mapToResult(voterInfo))
+                    .setColor("#85C1E9")
+                    .setTimestamp()
+                    .setFooter(); // TODO Put endtime here 
+
+                    message.channel.send(infoMessage);
+                    return poll.reactions.resolve(infoPollEmoji).users.remove(user.id);
+                }
 
                 if (!voterInfo.has(user.id)) voterInfo.set(user.id, { emoji: reaction.emoji.name });
 

@@ -104,6 +104,27 @@ module.exports = {
         return res;
     },
 
+    mapToResult(map){
+        let res = new Map();
+        let text = "";
+        
+        for (const [key, value] of map.entries()){
+            if (value in res){
+                console.log("Push " + key);
+                res[value].push(key);
+            } else {
+                console.log("Add " + key);
+                res[value] = [key];
+            }
+        }
+    
+        for (const [key, value] of res.entries()){
+            text += `${key} : ${value.join(", ")} \n`;
+        }
+        console.log("test " + text);
+        return text;
+    },
+
     formatNumberK(number) {
         return number > 999 ? `${(number / 1000).toLocaleString(undefined, { maximumFractionDigits: 1 })}K` : number;
     },
