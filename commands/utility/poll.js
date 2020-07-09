@@ -1,4 +1,5 @@
 const { Command } = require('discord.js-commando');
+const moment = require('moment');
 const { MessageEmbed } = require("discord.js");
 const { intToEmoji, mapToResult } = require("../../util/util")
 
@@ -23,6 +24,7 @@ module.exports = class PollCommand extends Command {
     }
     
     async run(message, {args}) {
+        moment.locale('en-gb'); 
 
         let array = args.split(";");
 
@@ -30,6 +32,7 @@ module.exports = class PollCommand extends Command {
             return message.say(`Error in parameters.`);
         }
 
+        let endDate = moment().add(5, 'hours').calendar();
         let question = array.shift();
 
         // Dictionnary containing "emoji - {option - vote }"
@@ -57,8 +60,7 @@ module.exports = class PollCommand extends Command {
         .addField("Options :", optionText)
         .addField("Controls : ", `${forceEndEmoji} to end poll`)
         .setColor("#85C1E9")
-        .setTimestamp()
-        .setFooter(); // TODO Put endtime here     
+        .setFooter(`Ends ${endDate}`);  
         var poll = await message.channel.send(embededMessage);
 
         // Add reactions
@@ -71,7 +73,7 @@ module.exports = class PollCommand extends Command {
         // collector
         const filter = (reaction, user) => user.id !== message.client.user.id;
         var collector = poll.createReactionCollector(filter, {
-            time: 1000000
+            time: 18000000
         });
 
         collector.on("collect", (reaction, user) => {
@@ -110,9 +112,7 @@ module.exports = class PollCommand extends Command {
             .setAuthor(message.author.username)
             .setDescription(question)
             .addField("Result : ", text)
-            .setColor("#85C1E9")
-            .setTimestamp()
-            .setFooter(); // TODO Put endtime here    
+            .setColor("#85C1E9");
 
             message.channel.send(resultEmbed);
         });
