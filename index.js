@@ -8,7 +8,7 @@ const Client = require('./structures/Client');
 const client = new Client({
 	commandPrefix: prefix,
 	owner: OWNER_ID,
-	invite: 'https://discord.gg/pakmSU',
+	invite: 'https://discord.gg/QgYgf3w',
 });
 
 client.registry
