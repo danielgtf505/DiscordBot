@@ -9,7 +9,7 @@ module.exports = class SoundBoardCommand extends Command {
 			aliases: ['sb'],
 			group: 'audio',
 			memberName: 'soundboard',
-			description: 'Soundboard !',
+			description: 'Soundboard ! <group:any> <sound number:0>',
 			guildOnly: true,
 			args: [
 				{
