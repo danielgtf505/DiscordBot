@@ -45,7 +45,7 @@ module.exports = class PlaylistCommand extends Command {
             connection: null,
             songs: [],
             loop: false,
-            volume: 100,
+            volume: 25,
             playing: true
         };
 

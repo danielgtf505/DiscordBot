@@ -55,7 +55,7 @@ module.exports = class PollCommand extends Command {
 
         let embededMessage = new MessageEmbed()
         .setTitle("Poll")
-        .setAuthor(message.author.username)
+        .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setDescription(question)
         .addField("Options :", optionText)
         .addField("Controls : ", `${forceEndEmoji} to end poll`)
@@ -109,7 +109,7 @@ module.exports = class PollCommand extends Command {
 
             let resultEmbed = new MessageEmbed()
             .setTitle("Poll")
-            .setAuthor(message.author.username)
+            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
             .setDescription(question)
             .addField("Result : ", text)
             .setColor("#85C1E9");

@@ -104,6 +104,13 @@ module.exports = {
         return res;
     },
 
+    formatNumber(number, minimumFractionDigits = 0) {
+		return Number.parseFloat(number).toLocaleString(undefined, {
+			minimumFractionDigits,
+			maximumFractionDigits: 2
+		});
+	},
+
     formatNumberK(number) {
         return number > 999 ? `${(number / 1000).toLocaleString(undefined, { maximumFractionDigits: 1 })}K` : number;
     },
