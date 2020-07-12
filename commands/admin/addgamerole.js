@@ -15,22 +15,23 @@ module.exports = class AddGameRoleCommand extends Command {
 			userPermissions: ['ADMINISTRATOR'],
 			guildOnly: true,
 			args: [
-				{
-					key: 'roleName',
-					prompt: 'What is the role to add ?',
-					type: 'string',
-                },
                 {
 					key: 'roleEmoji',
 					prompt: 'What is the emoji for the role to add ?',
 					type: 'string',
 				},
+				{
+					key: 'roleName',
+					prompt: 'What is the role to add ?',
+					type: 'string',
+                },
 			],
 		});
     }
     
     async run(message, {roleName, roleEmoji}) {
 
+        console.log(`${roleName} - ${roleEmoji}`)
         let regex = roleEmoji.match(regexEmoji);
         if (regex){ // if emoji matchs customEmoji syntax, check if it's from the server
             console.log(regex[2]);

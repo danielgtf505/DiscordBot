@@ -15,16 +15,16 @@ module.exports = class EditGameRoleCommand extends Command {
 			userPermissions: ['ADMINISTRATOR'],
 			guildOnly: true,
 			args: [
-				{
-					key: 'roleName',
-					prompt: 'What is the role to edit ?',
-					type: 'string',
-                },
                 {
 					key: 'roleEmoji',
 					prompt: 'What is the emoji for the role to edit ?',
 					type: 'string',
 				},
+				{
+					key: 'roleName',
+					prompt: 'What is the role to edit ?',
+					type: 'string',
+                },
 			],
 		});
     }
