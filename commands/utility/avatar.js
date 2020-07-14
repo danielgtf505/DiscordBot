@@ -7,7 +7,7 @@ module.exports = class AvatarCommand extends Command {
 			aliases: [],
 			group: 'utility',
 			memberName: 'avatar',
-			description: 'Return avatar.',
+			description: 'Return your avatar or the mentionned user.',
 			clientPermissions: ['ATTACH_FILES'],
 		});
     }

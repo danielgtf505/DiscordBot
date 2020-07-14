@@ -8,7 +8,7 @@ module.exports = class CatCommand extends Command {
 			aliases: [],
 			group: 'random',
 			memberName: 'cat',
-			description: 'Look for a random cat picture.',
+			description: 'Look for a random cat picture from https://cataas.com/cat.',
 			clientPermissions: ['ATTACH_FILES'],
 			credit: [
 				{
@@ -22,6 +22,6 @@ module.exports = class CatCommand extends Command {
     
     async run(message) {
 		const { body } = await request.get('https://cataas.com/cat');
-		return message.say('Random cat', { files: [{ attachment: body, name: 'cat.jpg' }] });
+		return message.say('', { files: [{ attachment: body, name: 'cat.jpg' }] });
 	}
 };

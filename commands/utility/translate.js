@@ -10,7 +10,7 @@ module.exports = class TranslateCommand extends Command {
 			aliases: ['tl'],
 			group: 'utility',
 			memberName: 'translate',
-			description: 'Translate text',
+			description: 'Translate text a given text. Usage : \`<origin language code> <target language code> <text>\`',
 			args: [
 				{
 					key: 'from',

@@ -8,7 +8,7 @@ module.exports = class StopCommand extends Command {
             aliases: [],
             group: 'audio',
             memberName: 'stop',
-            description: 'Stop the queue',
+            description: 'Stop the queue.',
             guildOnly: true,
         });
     }

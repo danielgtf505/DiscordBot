@@ -8,12 +8,12 @@ module.exports = class VolumeCommand extends Command {
             aliases: ['v'],
             group: 'audio',
             memberName: 'volume',
-            description: 'Change the volume for youtube player.',
+            description: 'Change the volume (0 to 100) of the youtube player.',
             guildOnly: true,
             args: [
                 {
                     key: 'volume',
-                    prompt: 'Volume ?',
+                    prompt: 'Volume to set (0 to 100)?',
                     type: 'integer',
                     validate: volume => volume <= 0 && volume >= 100,
                     default: 50,

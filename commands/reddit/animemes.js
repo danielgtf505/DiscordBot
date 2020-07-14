@@ -7,7 +7,7 @@ module.exports = class AnimemesCommand extends SubredditCommand {
 			aliases: [],
 			group: 'reddit',
 			memberName: 'animemes',
-			description: 'Responds with an animeme.',
+			description: 'Responds with an animeme from **/r/Animemes**.',
 			clientPermissions: ['EMBED_LINKS'],
 			postType: 'image',
 			getIcon: true,

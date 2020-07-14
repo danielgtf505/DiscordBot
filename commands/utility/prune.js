@@ -7,7 +7,7 @@ module.exports = class PruneCommand extends Command {
 			aliases: [],
 			group: 'utility',
 			memberName: 'prune',
-			description: 'Prune messages',
+			description: 'Prune messages (99 by default) in the current text channel.',
 			guildOnly: true,
 			args: [
 				{

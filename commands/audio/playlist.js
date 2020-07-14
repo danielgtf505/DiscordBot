@@ -14,7 +14,7 @@ module.exports = class PlaylistCommand extends Command {
             aliases: ['pl'],
             group: 'audio',
             memberName: 'playlist',
-            description: 'Playlist.',
+            description: 'Add a YouTube playlist to the server queue.',
             guildOnly: true,
             clientPermissions: ['CONNECT', 'SPEAK'],
 			args: [

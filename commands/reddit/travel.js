@@ -9,7 +9,7 @@ module.exports = class TravelCommand extends SubredditCommand {
 			group: 'reddit',
 			memberName: 'travel',
 			description: 'Responds with a travel picture from reddit.',
-			details: `**Subreddits:** ${subreddits.join(', ')}`,
+			details: `**Subreddits** = ${subreddits.join(', ')}`,
 			clientPermissions: ['EMBED_LINKS'],
 			nsfw: false,
 			postType: 'image',

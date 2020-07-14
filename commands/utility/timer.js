@@ -7,7 +7,7 @@ module.exports = class TimerCommand extends Command {
 			name: 'timer',
 			group: 'utility',
 			memberName: 'timer',
-			description: 'Sets a timer for anywhere from 1 second to 10 minutes.',
+			description: 'Sets a timer for up to 10 minutes. Usage : \`<time in seconds>\`',
 			args: [
 				{
 					key: 'time',

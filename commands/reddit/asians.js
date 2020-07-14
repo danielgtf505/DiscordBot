@@ -9,7 +9,7 @@ module.exports = class AsiansCommand extends SubredditCommand {
 			group: 'reddit',
 			memberName: 'asians',
 			description: 'Responds with a picture from Narkrai\'s favorite subreddits.',
-			details: `**Subreddits:** ${subreddits.join(', ')}`,
+			details: `**Subreddits** = ${subreddits.join(', ')}`,
 			clientPermissions: ['EMBED_LINKS'],
 			nsfw: true,
 			postType: 'image',

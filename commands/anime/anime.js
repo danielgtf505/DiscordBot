@@ -82,7 +82,7 @@ module.exports = class AnimeCommand extends Command {
             aliases: [],
             group: 'anime',
             memberName: 'anime',
-            description: 'Query AniList for an anime entry',
+            description: 'Query AniList for an anime entry.',
             clientPermissions: ['EMBED_LINKS'],
 			credit: [
 				{

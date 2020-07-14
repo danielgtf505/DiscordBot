@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const moment = require('moment');
 const { MessageEmbed } = require("discord.js");
-const { intToEmoji, mapToResult } = require("../../util/util")
+const { intToEmoji } = require("../../util/util")
 
 const forceEndEmoji = "❌";
 
@@ -11,12 +11,13 @@ module.exports = class PollCommand extends Command {
 			name: 'poll',
 			aliases: [],
 			group: 'utility',
-			memberName: 'poll',
-            description: 'Start a poll.',
+            memberName: 'poll',
+            description: 'Start a poll which ends automatically after 5 hours or until the author push the \`❌\` reaction. Voters use reactions to participate. Usage : \`<Question> ;<option 1> ;<options 2> ...\` (max 9 options)',
+            guildOnly: true,
             args: [
 				{
 					key: 'args',
-					prompt: 'Poll options : \` <Question> ; <option 1> ; <options 2> ...; <timeout>\` (max 9 options)',
+					prompt: 'Poll options : \`<Question> ;<option 1> ;<options 2> ...\` (max 9 options)',
 					type: 'string',
                 }
 			],
