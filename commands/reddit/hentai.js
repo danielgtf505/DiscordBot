@@ -9,7 +9,7 @@ module.exports = class HentaiCommand extends SubredditCommand {
 			group: 'reddit',
 			memberName: 'hentai',
 			description: 'Responds with a random hentai image.',
-			details: `**Subreddits:** ${subreddits.join(', ')}`,
+			details: `**Subreddits** = ${subreddits.join(', ')}`,
 			clientPermissions: ['EMBED_LINKS'],
 			nsfw: true,
 			postType: 'image',

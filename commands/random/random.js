@@ -7,7 +7,7 @@ module.exports = class RandomCommand extends Command {
 			aliases: ['rand', 'rnd'],
 			group: 'random',
 			memberName: 'random',
-            description: 'Choose a random number',
+            description: 'Choose a random number between two bounds.',
             args: [
 				{
 					key: 'lower',

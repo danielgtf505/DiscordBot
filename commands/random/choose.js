@@ -7,7 +7,7 @@ module.exports = class ChooseCommand extends Command {
 			aliases: [],
 			group: 'random',
 			memberName: 'choose',
-            description: 'Let the bot choose for you',
+            description: 'Let the bot choose for you. Usage : \`<option 1>; <option 2>; ...\`',
             args: [
 				{
 					key: 'options',

@@ -9,7 +9,7 @@ module.exports = class FoodCommand extends SubredditCommand {
 			group: 'reddit',
 			memberName: 'food',
 			description: 'Responds with a picture from a food subreddits.',
-			details: `**Subreddits:** ${subreddits.join(', ')}`,
+			details: `**Subreddits** = ${subreddits.join(', ')}`,
 			clientPermissions: ['EMBED_LINKS'],
 			nsfw: false,
 			postType: 'image',

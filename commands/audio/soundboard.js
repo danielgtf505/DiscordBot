@@ -2,6 +2,8 @@ const { Command } = require('discord.js-commando');
 const path = require('path');
 const fs = require('fs');
 
+const soundboardGroups = require('../../resources/json/soundboard');
+
 module.exports = class SoundBoardCommand extends Command {
 	constructor(client) {
 		super(client, {
@@ -9,7 +11,8 @@ module.exports = class SoundBoardCommand extends Command {
 			aliases: ['sb'],
 			group: 'audio',
 			memberName: 'soundboard',
-			description: 'Soundboard ! <group:any> <sound number:0>',
+			description: 'Play a sound from a local soundboard. Usage : \`<group:any> <sound number:0>\`',
+			details : `Current groups available : ${soundboardGroups.join(', ')}\nTo add a group of sound or new sounds, contact my owner. `,
 			guildOnly: true,
 			args: [
 				{

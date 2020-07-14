@@ -9,7 +9,7 @@ module.exports = class AvatarCommand extends Command {
 			aliases: ['curr'],
 			group: 'utility',
 			memberName: 'currency',
-            description: 'Convert currency.',
+            description: 'Convert currency. Usage : \`<amount> <base currency> <target currency>\`',
             args: [
                 {
 					key: 'amount',
