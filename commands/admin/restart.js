@@ -12,7 +12,8 @@ module.exports = class RestartCommand extends Command {
 			memberName: 'restart',
 			description: 'Restart the bot.',
             ownerOnly: true,
-            guildOnly: true,
+			guildOnly: true,
+			hidden: true
 		});
     }
     
