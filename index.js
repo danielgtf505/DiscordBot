@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { prefix, token, OWNER_ID, ACTIVITY_URL } = require('./config.json');
+const moment = require('moment');
+const { prefix, token, OWNER_ID, ACTIVITY_URL, LOG_CHANNEL_ID } = require('./config.json');
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
 const db = require('./structures/db');
@@ -38,6 +39,7 @@ client.once('ready', () => {
 	db.GameRoles.sync();
 	client.user.setActivity('DM help', {type : "STREAMING", url : ACTIVITY_URL});
 	console.log('Ready!');
+	if (LOG_CHANNEL_ID) client.channels.cache.get(LOG_CHANNEL_ID).send(`${client.user.username} started!`);
 });
 
 client.on('message', message => {

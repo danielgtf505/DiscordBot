@@ -14,6 +14,7 @@ module.exports = class PollCommand extends Command {
             memberName: 'poll',
             description: 'Start a poll which ends automatically after 5 hours or until the author push the \`❌\` reaction. Voters use reactions to participate. Usage : \`<Question> ;<option 1> ;<options 2> ...\` (max 9 options)',
             guildOnly: true,
+            examples: [`\`poll What should we eat tonight ?; Sushi!; BURGER; vegan\``],
             args: [
 				{
 					key: 'args',
