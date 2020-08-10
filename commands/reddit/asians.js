@@ -14,6 +14,7 @@ module.exports = class AsiansCommand extends SubredditCommand {
 			nsfw: true,
 			postType: 'image',
 			getIcon: true,
+			hidden: true,
 			args: [
 				{
 					key: 'subreddit',
