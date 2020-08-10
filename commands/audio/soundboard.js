@@ -74,9 +74,9 @@ function genPath(folder, number){
 	
 				} else {
 					if (number > files.length){
-						console.log(`Args 1 ${number} is bigger than file count, taking first.`)
+						console.log(`Args 1 ${number} is lower than file count, taking first.`)
 					} else {
-						i = number;
+						i = number - 1;
 					}
 				}
 				pathAudio.push(files[i]);
