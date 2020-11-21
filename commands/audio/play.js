@@ -62,11 +62,11 @@ module.exports = class PlayCommand extends Command {
 
 		if (urlValid) {
 			try {
-				songInfo = await ytdl.getInfo(url);
+				songInfo = await ytdl.getInfo(video);
 				song = {
-					title: songInfo.title,
-					url: songInfo.video_url,
-					duration: songInfo.contentLength
+					title: songInfo.videoDetails.title,
+					url: songInfo.videoDetails.video_url,
+					duration: songInfo.videoDetails.lengthSeconds
 				};
 			} catch (error) {
 				if (error.message.includes("copyright")) {
@@ -83,9 +83,9 @@ module.exports = class PlayCommand extends Command {
 				const results = await youtube.searchVideos(video, 1);
 				songInfo = await ytdl.getInfo(results[0].url);
 				song = {
-					title: songInfo.title,
-					url: songInfo.video_url,
-					duration: songInfo.contentLength
+					title: songInfo.videoDetails.title,
+					url: songInfo.videoDetails.video_url,
+					duration: songInfo.videoDetails.lengthSeconds
 				};
 			} catch (error) {
 				console.error(error);
